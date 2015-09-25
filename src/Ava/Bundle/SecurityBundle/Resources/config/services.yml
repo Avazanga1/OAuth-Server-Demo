@@ -1,0 +1,12 @@
+services:
+#    ava_security.example:
+#        class: Ava\Bundle\SecurityBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+    oauth_event_listener:
+        class:  Ava\Bundle\SecurityBundle\EventListener\OAuthEventListener
+        arguments:
+            - @app.user.provider
+            - @doctrine.orm.entity_manager
+        tags:
+            - { name: kernel.event_listener, event: fos_oauth_server.pre_authorization_process, method: onPreAuthorizationProcess }
+            - { name: kernel.event_listener, event: fos_oauth_server.post_authorization_process, method: onPostAuthorizationProcess }
